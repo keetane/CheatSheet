@@ -39,9 +39,10 @@ def hello():
 ```
 ~~~
 
+
 > ~~~python
-> def hello():
->     print("hello world!!")
+def hello():
+    print("hello world!!")
 
 
 ## 3.リンクの挿入、画像の埋め込み
