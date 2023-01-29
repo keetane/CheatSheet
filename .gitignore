@@ -8,3 +8,4 @@
 *.json
 *.smi
 __pycache__
+Dockerfile_ds.txt

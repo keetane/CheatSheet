@@ -1,0 +1,60 @@
+FROM ubuntu:latest 
+
+# proxy
+# ENV http_proxy http://doraemon:1a2b3c@111.111.111.111:8080
+ENV https_proxy https://doraemon:1a2b3c@111.111.111.111:8080
+
+# update
+RUN apt-get -y update && apt-get install -y \
+# libsm6 \
+# libxext6 \
+# libxrender-dev \
+# libglib2.0-0 \
+sudo \
+wget \
+curl \
+unzip \
+vim
+
+#install miniconda3
+WORKDIR /opt
+
+# download miniconda package and install miniconda
+# archive -> https://repo.anaconda.com/archive/
+# RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py37_22.11.1-1-Linux-x86_64.sh
+   
+
+
+
+
+
+# sh /opt/Miniconda3-4.5.4-Linux-x86_64.sh -b -p /opt/miniconda3 && \
+# rm -f Miniconda3-4.5.4-Linux-x86_64.sh
+
+# # set path
+# ENV PATH /opt/miniconda3/bin:$PATH
+
+# # install miniconda packages
+# RUN pip install --upgrade pip && \
+# conda install conda=4.8.3=py36_0 && \
+# conda create -n pymol python==3.7 && \
+# SHELL ["conda", "run", "-n", "pymol", "/bin/bash", "-c"] && \
+# # https://qiita.com/kimisyo/items/66db9c9db94751b8572b
+# conda config --append channels conda-forge && \
+# conda install -c conda-forge rdkit && \
+# conda install -c conda-forge pymol-open-source && \ 
+# # https://qiita.com/kojix2/items/3c57a50fc29ac5361952
+# conda install plotly && \
+# conda install -c conda-forge nodejs jupyterlab
+
+
+# # update pip and install packages
+# RUN pip install --upgrade pip
+
+# WORKDIR /
+# RUN mkdir /work
+
+# # execute jupyterlab as a default command
+# CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--LabApp.token=''"]
+
+# # docker run -v ~/Documents/Linux:/work -p 8888:8888 --name ubuntu K_Linux

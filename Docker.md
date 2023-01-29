@@ -201,7 +201,7 @@ docker login
 docker push `user_id/image_name:ver`
 ```
 
-# dockerfileからbuild
+# dockerfileからimageをbuild
 ```
 cd `working directory`
 docker build -t `image_name` .
