@@ -132,19 +132,18 @@ root@random_id:/# exit  # containerを停止してexitする
 
 # imageからcontainerにlocal volumeをマウントしてbashで作業する
 ```
+docker run -v `host abs. path`:`container abs. path` `image_name` `command`
 
+docker run -v ~/Documents/Linux:/work --name ubuntu -it ubuntu bash
 ```
 
 # imageからcontainerにlocal volumeをマウントしてjupyterのポートを割り当ててbashで作業する
 ```
-
+docker run -v ~/Documents/Linux:/work -p 8888:8888 --name test ubuntu
+# container側にJupyterなどが入ってないとhostのブラウザで`localhost:8888` を入力してもjupyterは起動しない
 ```
 
-# dockerfileからbuild
-```
-cd `working directory`
-docker build -t `image_name` .
-```
+
 
 # コンテナをimageにcommit
 ```
@@ -202,7 +201,8 @@ docker login
 docker push `user_id/image_name:ver`
 ```
 
-# dockerfileからbuildする
+# dockerfileからbuild
 ```
-
+cd `working directory`
+docker build -t `image_name` .
 ```
