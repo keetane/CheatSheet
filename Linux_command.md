@@ -386,7 +386,7 @@ kill -l | wc -w # 31
 プロセスを強制終了
 ```bash
 sleep 10000 & # [1] 95540
-jons # [1]  + running    sleep 10000
+jobs # [1]  + running    sleep 10000
 kill -KILL %1 # [1]  + killed     sleep 10000 
 # or
 kill -9 %1 # [1]  + killed     sleep 10000 

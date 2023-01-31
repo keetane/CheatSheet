@@ -30,14 +30,14 @@ SHELL ["conda", "run", "-n", "pymol", "/bin/bash", "-c"]
 # https://qiita.com/kimisyo/items/66db9c9db94751b8572b
 
 RUN command conda config --append channels conda-forge
-RUN conda install -c rdkit -c conda-forge rdkit --override-channels
+RUN conda install -c conda-forge rdkit
 RUN conda install -c conda-forge pymol-open-source
 RUN conda install plotly
 RUN conda install -c conda-forge nodejs jupyterlab
 
 RUN sudo apt-get install make
-RUN sudo apt-get install build-essential
-RUN sudo apt install openjdk-11-jdk
+RUN sudo apt-get install build-essential -y
+RUN sudo apt install openjdk-11-jdk -y
 
 
 # WORKDIR /
@@ -50,8 +50,15 @@ RUN sudo apt install openjdk-11-jdk
 # CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--LabApp.token=''"]
 
 
+# かめさんのdocker image_name
+# datascientistus/ds-python-env
+
 # sbddというdocker imageをbuild
 # docker build -t sbdd . 
+
+# 最初からbuildするなら--no-cache
+# docker build -t sbdd . --no-cache
+
 
 # ubuntuというcontainerをsbddというimageからcreateしてbashでrun
 # docker run -it -v ~/Documents/Linux:/work --name ubuntu sbdd bash

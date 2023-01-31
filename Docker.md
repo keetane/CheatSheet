@@ -1,22 +1,28 @@
+# Dockerの全体像  
 ![docker図解](https://penpen-dev.com/blog/wp-content/uploads/hsthbrt.png)  
 https://penpen-dev.com/blog/docker-command/
 
-### Docker超入門
-https://datawokagaku.com/category/%e8%ac%9b%e5%ba%a7%e4%b8%80%e8%a6%a7/docker%e8%b6%85%e5%85%a5%e9%96%80/
-
-### ぷんたむの悟りの書
-https://punhundon-lifeshift.com/dockerfile
-
-### miniconda + conda-forgeで開発環境を揃える
-https://qiita.com/kimisyo/items/66db9c9db94751b8572b    
+出力される結果は各自の環境で異なるので参考程度にしてください。
 
 
-# docker hubからimageをpull
+# Contents
+- [新しい環境を構築する](#新しい環境を構築する)
+- [Containerで作業する](#Containerで作業する)
+- [環境を破棄する](#環境を破棄する)
+- [Dockerfile](#dockerfileからimageをbuild)
+- [Reference](#reference)
+
+# 新しい環境を構築する
+## docker hubからimageをpull
 ```terminal
 docker pull `image:ver`
+
+docker pull ubuntu      # ver.を指定しないとlatestがpullされる
 ```
 
-# pullしたimageを参照
+
+
+## pullしたimageを参照
 ```
 docker images
 
@@ -25,9 +31,9 @@ docker images
 # python                          latest    9dda5bedc1c7   3 months ago   868MB
 ```
 
-# imageからコンテナを作ってrun
-### enterはしない
-### imageを持ってない場合はhubからpullしてくる
+## imageからコンテナを作ってrun
+enterはしない  
+imageを持ってない場合はhubからpullしてくる
 
 ```
 docker run `image_name` 
@@ -39,7 +45,12 @@ docker run --name test hello-world
 # ...
 ```
 
-# containerのリストを表示
+[Contentsに戻る](#Contents)
+
+
+# Containerで作業する
+
+## containerのリストを表示
 ```
 docker ps # upのものだけ
 docker ps -a # 全て表示
@@ -51,7 +62,7 @@ docker ps -a # 全て表示
 # runしただけではcontainer statusはexited
 ```
 
-# containerを起動する
+## containerを起動する
 ```
 docker restart `container_name`
 
@@ -76,23 +87,24 @@ CONTAINER ID   IMAGE                          COMMAND       CREATED        STATU
 cdf417f58458   continuumio/anaconda3:latest   "/bin/bash"   3 months ago   Up 5 seconds             anaconda3
 ```
 
-# 起動中のcontainerに入って新しいbashで作業する (execute)
+
+## 起動中のcontainerに入って新しいbashで作業する (execute)
 ```
 docker exec -it `container_name` bash
-# root@random_text:/#      # containerのbash promptが返ってくる
+# root@container_id:/#      # containerのbash promptが返ってくる
 ```
 
-### docker attachとの違いについて
+docker attachとの違いについて  
 https://qiita.com/RyoMa_0923/items/9b5d2c4a97205692a560  
 attach : container内の既に起動しているbashを使う  
 exec -it : 新たにbashを立ち上げる
 
 
-# 起動したままcontainerから抜ける (detach)
+## 起動したままcontainerから抜ける (detach)
 ```
 ctrl+p ctrl+q
 ```
-### VS codeではVS codeのショートカットが起動してしまうので変更する必要がある
+VS codeではVS codeのショートカットが起動してしまうので変更する必要がある  
 https://qiita.com/Statham/items/c204e85067ea4dca2724  
 
 ```
@@ -102,15 +114,15 @@ docker ps
 # cdf417f58458   continuumio/anaconda3:latest   "/bin/bash"   3 months ago   Up 10 minutes             anaconda3
 ```
 
-# 起動中のcontainerのbashに入って作業する
+## 起動中のcontainerのbashに入って作業する
 ```
 docker attach `container_name`
-# root@random_text:/#      # container/bashのpromptが返ってくる
+# root@container_id:/#      # container/bashのpromptが返ってくる
 ```
 
-# containerを停止して脱出する
+## containerを停止して脱出する
 ```
-root@random_text:/# exit
+root@container_id:/# exit
 
 docker ps -a
 STATUS          PORTS     NAMES
@@ -119,33 +131,46 @@ STATUS          PORTS     NAMES
 ```
 
 
-# imageからcontainerを作ってbashで作業する
+## imageからcontainerを作ってbashで作業する
 ```
-docker run -it `image_name` bash # interact terminal
+docker run --name `container_name`　-it `image_name` bash # interact terminal
 
-# root@random_id:/#     # containerのbash promptが返ってくる
+# root@container_id:/#     # containerのbash promptが返ってくる
 
-root@random_id:/# exit  # containerを停止してexitする
+root@container_id:/# exit  # containerを停止してexitする
 
 # directory$            # hostのterminal promptに戻る
 ```
 
-# imageからcontainerにlocal volumeをマウントしてbashで作業する
+## imageからcontainerにlocal volumeをマウントしてbashで作業する
 ```
-docker run -v `host abs. path`:`container abs. path` `image_name` `command`
+docker run --name `container_name` -v `host abs. path`:`container abs. path` `image_name` `command`
 
-docker run -v ~/Documents/Linux:/work --name ubuntu -it ubuntu bash
+docker run --name `container_name` -v ~/Documents/Linux:/work --name ubuntu -it ubuntu bash
 ```
 
-# imageからcontainerにlocal volumeをマウントしてjupyterのポートを割り当ててbashで作業する
+## imageからcontainerにlocal volumeをマウントしてjupyterのポートを割り当ててbashで作業する
 ```
 docker run -v ~/Documents/Linux:/work -p 8888:8888 --name test ubuntu
 # container側にJupyterなどが入ってないとhostのブラウザで`localhost:8888` を入力してもjupyterは起動しない
 ```
 
 
+[Contentsに戻る](#Contents)
 
-# コンテナをimageにcommit
+
+# 環境を破棄する
+Containerはimageを基に動いているので、containerが存在するうちはimageを削除できない。  
+手順としては
+1. [containerをimageにcommit](#コンテナをimageにcommit)
+2. [imageをdockerhubにpush](#docker_hubにログイン)
+3. [containerを削除](#containerを削除)
+4. [imageを削除](#imageを削除)
+
+で環境を保存しながら適宜破棄する。  
+もしくはDockerfileとして残す。
+
+## コンテナをimageにcommit
 ```
 docker commit `container_name` `image_name:ver`
 
@@ -168,7 +193,26 @@ docker images
 # continuumio/anaconda3           <none>    40d5cbe3a8cd   7 months ago    2.69GB
 ```
 
-# docker imageを削除
+
+
+## docker_hubにログイン
+```
+docker login      # idとpwを入力
+```
+
+## imageをdocker hubのrepoにpush
+```
+docker push `user_id/image_name:ver`
+```
+
+## containerを削除
+```
+docker rm `container_name` # or `container_id`
+```
+
+
+
+## imageを削除
 ```
 docker rmi `image_name`
 
@@ -185,24 +229,29 @@ docker images
 # containerで使用中だとreferenceになっているため削除できない
 ```
 
-# docker containerを削除
-```
-docker rm `container_name` # or `container_id`
-```
+
+[Contentsに戻る](#Contents)
 
 
-# docker hubにログイン
-```
-docker login
-```
-
-# imageをdocker hubのrepoにpush
-```
-docker push `user_id/image_name:ver`
-```
 
 # dockerfileからimageをbuild
 ```
 cd `working directory`
 docker build -t `image_name` .
+
+docker build -t `image_name` . --no-cache # オプションないと前回の続きをbuildする
 ```
+[Contentsに戻る](#Contents)
+
+
+# Reference
+### Docker超入門
+https://datawokagaku.com/category/%e8%ac%9b%e5%ba%a7%e4%b8%80%e8%a6%a7/docker%e8%b6%85%e5%85%a5%e9%96%80/
+
+### ぷんたむの悟りの書
+https://punhundon-lifeshift.com/dockerfile
+
+### miniconda + conda-forgeで開発環境を揃える
+https://qiita.com/kimisyo/items/66db9c9db94751b8572b    
+
+[Contentsに戻る](#Contents)
