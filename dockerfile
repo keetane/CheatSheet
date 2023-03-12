@@ -37,39 +37,33 @@ ENV PATH $PATH:/usr/local/apps/p2rank_2.4
 
 
 
-# #install miniconda3
-# WORKDIR /opt
-# # download miniconda package and install miniconda
-# # archive -> https://docs.conda.io/en/latest/miniconda.html
-# RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-# RUN bash /opt/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda3
-# RUN rm -f Miniconda3-latest-Linux-x86_64.sh
-# # set path
-# ENV PATH /opt/miniconda3/bin:$PATH
+#install miniconda3
+WORKDIR /opt
+# download miniconda package and install miniconda
+# archive -> https://docs.conda.io/en/latest/miniconda.html
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+RUN bash /opt/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda3
+RUN rm -f Miniconda3-latest-Linux-x86_64.sh
+# set path
+ENV PATH /opt/miniconda3/bin:$PATH
 
-# # conda create
-# RUN conda create -n pymol python=3.7
+# conda create
+RUN conda create -n sbdd python=3.7
 
-# # install conda package
-# SHELL ["conda", "run", "-n", "pymol", "/bin/bash", "-c"]
-# # https://qiita.com/kimisyo/items/66db9c9db94751b8572b
+# install conda package
+SHELL ["conda", "run", "-n", "pymol", "/bin/bash", "-c"]
+# https://qiita.com/kimisyo/items/66db9c9db94751b8572b
 
-# RUN command conda config --append channels conda-forge
-# RUN conda install pip
-# RUN pip install lightdock
-# # RUN conda install -c conda-forge rdkit -y
-# # RUN conda install -c conda-forge pymol-open-source -y
-# # RUN conda install plotly
-# # RUN conda install -c conda-forge py3dmol
-# # RUN conda install -c conda-forge nodejs jupyterlab
+RUN command conda config --append channels conda-forge
+RUN conda install pip
+RUN pip install lightdock
+RUN conda install -c conda-forge rdkit -y
+# RUN conda install -c conda-forge pymol-open-source -y
+# RUN conda install -c conda-forge nodejs jupyterlab
 
 
-
-# WORKDIR /
-# RUN mkdir /work
-# WORKDIR /
-
-# RUN conda init
+RUN conda init
+WORKDIR /work
 
 # CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--LabApp.token=''"]
 # CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--ServerApp.token=''"]
