@@ -33,7 +33,7 @@ RUN sed -i -e 's|$INSTALL_DIR|$HOME/.p2rank|g' ./p2rank_2.4/prank
 
 # set a path
 ENV PATH $PATH:/usr/local/apps/p2rank_2.4
-
+# export PATH=$PATH:/usr/local/apps/p2rank_2.4
 
 
 
@@ -46,18 +46,20 @@ RUN bash /opt/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda3
 RUN rm -f Miniconda3-latest-Linux-x86_64.sh
 # set path
 ENV PATH /opt/miniconda3/bin:$PATH
+RUN conda config --add channels conda-forge
+RUN conda config --remove channels defaults
 
 # conda create
 RUN conda create -n sbdd python=3.7
 
 # install conda package
-SHELL ["conda", "run", "-n", "pymol", "/bin/bash", "-c"]
+SHELL ["conda", "run", "-n", "sbdd", "/bin/bash", "-c"]
 # https://qiita.com/kimisyo/items/66db9c9db94751b8572b
 
-RUN command conda config --append channels conda-forge
+RUN conda config --add channels conda-forge
 RUN conda install pip
 RUN pip install lightdock
-RUN conda install -c conda-forge rdkit -y
+# RUN conda install rdkit -y
 # RUN conda install -c conda-forge pymol-open-source -y
 # RUN conda install -c conda-forge nodejs jupyterlab
 
