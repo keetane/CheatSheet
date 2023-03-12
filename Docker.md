@@ -14,7 +14,7 @@ https://penpen-dev.com/blog/docker-command/
 
 # 新しい環境を構築する
 ## docker hubからimageをpull
-```terminal
+```bash
 docker pull `image:ver`
 
 docker pull ubuntu      # ver.を指定しないとlatestがpullされる
@@ -23,7 +23,7 @@ docker pull ubuntu      # ver.を指定しないとlatestがpullされる
 
 
 ## pullしたimageを参照
-```
+```bash
 docker images
 
 # REPOSITORY                      TAG       IMAGE ID       CREATED        SIZE
@@ -35,7 +35,7 @@ docker images
 enterはしない  
 imageを持ってない場合はhubからpullしてくる
 
-```
+```bash
 docker run `image_name` 
 docker run --name `container_name` `image_name`  # --name ``でcontainer nameを指定できる
 docker run --name test hello-world
@@ -45,15 +45,39 @@ docker run --name test hello-world
 # ...
 ```
 
+## imageからcontainerを作ってbashで作業する
+```bash
+docker run --name `container_name`　-it `image_name` bash # interact terminal
+
+# root@container_id:/#     # containerのbash promptが返ってくる
+
+root@container_id:/# exit  # containerを停止してexitする
+
+# directory$            # hostのterminal promptに戻る
+```
+
+## imageからcontainerにlocal volumeをマウントしてbashで作業する
+```bash
+docker run --name `container_name` -v `host abs. path`:`container abs. path` `image_name` `command`
+
+docker run --name `container_name` -v ~/Documents/Linux:/work -it ubuntu bash
+```
+
+## imageからcontainerにlocal volumeをマウントしてjupyterのポートを割り当ててbashで作業する
+```bash
+docker run -v ~/Documents/Linux:/work -p 8888:8888 --name test ubuntu
+# container側にJupyterなどが入ってないとhostのブラウザで`localhost:8888` を入力してもjupyterは起動しない
+```
+
 [Contentsに戻る](#Contents)
 
 
 # Containerで作業する
 
 ## containerのリストを表示
-```
-docker ps # upのものだけ
-docker ps -a # 全て表示
+```bash
+docker ps       # upのものだけ
+docker ps -a    # 全て表示
 
 # CONTAINER ID   IMAGE                          COMMAND                  CREATED        STATUS                      PORTS     NAMES
 # 498900d17e03   hello-world                    "/hello"                 2 minutes ago   Exited (0) 2 minutes ago              test
@@ -63,7 +87,7 @@ docker ps -a # 全て表示
 ```
 
 ## containerを起動する
-```
+```bash
 docker restart `container_name`
 
 docker restart test
@@ -77,19 +101,19 @@ cdf417f58458   continuumio/anaconda3:latest   "/bin/bash"              3 months 
 # hello-worldにはOSとbashが入ってないので起動(=up)にならない
 ```
 
-```
+```bash
 docker restart anaconda3
 # anaconda3
 
 docker ps # status == up のcontainerを表示
 
-CONTAINER ID   IMAGE                          COMMAND       CREATED        STATUS         PORTS     NAMES
-cdf417f58458   continuumio/anaconda3:latest   "/bin/bash"   3 months ago   Up 5 seconds             anaconda3
+# CONTAINER ID   IMAGE                          COMMAND       CREATED        STATUS         PORTS     NAMES
+# cdf417f58458   continuumio/anaconda3:latest   "/bin/bash"   3 months ago   Up 5 seconds             anaconda3
 ```
 
 
 ## 起動中のcontainerに入って新しいbashで作業する (execute)
-```
+```bash
 docker exec -it `container_name` bash
 # root@container_id:/#      # containerのbash promptが返ってくる
 ```
@@ -101,13 +125,13 @@ exec -it : 新たにbashを立ち上げる
 
 
 ## 起動したままcontainerから抜ける (detach)
-```
+```bash
 ctrl+p ctrl+q
 ```
 VS codeではVS codeのショートカットが起動してしまうので変更する必要がある  
 https://qiita.com/Statham/items/c204e85067ea4dca2724  
 
-```
+```bash
 docker ps
 
 # CONTAINER ID   IMAGE                          COMMAND       CREATED        STATUS          PORTS     NAMES
@@ -115,13 +139,13 @@ docker ps
 ```
 
 ## 起動中のcontainerのbashに入って作業する
-```
+```bash
 docker attach `container_name`
 # root@container_id:/#      # container/bashのpromptが返ってくる
 ```
 
 ## containerを停止して脱出する
-```
+```bash
 root@container_id:/# exit
 
 docker ps -a
@@ -131,32 +155,9 @@ STATUS          PORTS     NAMES
 ```
 
 
-## imageからcontainerを作ってbashで作業する
-```
-docker run --name `container_name`　-it `image_name` bash # interact terminal
-
-# root@container_id:/#     # containerのbash promptが返ってくる
-
-root@container_id:/# exit  # containerを停止してexitする
-
-# directory$            # hostのterminal promptに戻る
-```
-
-## imageからcontainerにlocal volumeをマウントしてbashで作業する
-```
-docker run --name `container_name` -v `host abs. path`:`container abs. path` `image_name` `command`
-
-docker run --name `container_name` -v ~/Documents/Linux:/work --name ubuntu -it ubuntu bash
-```
-
-## imageからcontainerにlocal volumeをマウントしてjupyterのポートを割り当ててbashで作業する
-```
-docker run -v ~/Documents/Linux:/work -p 8888:8888 --name test ubuntu
-# container側にJupyterなどが入ってないとhostのブラウザで`localhost:8888` を入力してもjupyterは起動しない
-```
 
 
-[Contentsに戻る](#Contents)
+[Contentsに戻る][# Contents]
 
 
 # 環境を破棄する
@@ -171,7 +172,7 @@ Containerはimageを基に動いているので、containerが存在するうち
 もしくはDockerfileとして残す。
 
 ## コンテナをimageにcommit
-```
+```bash
 docker commit `container_name` `image_name:ver`
 
 docker images
@@ -196,24 +197,24 @@ docker images
 
 
 ## docker_hubにログイン
-```
+```bash
 docker login      # idとpwを入力
 ```
 
 ## imageをdocker hubのrepoにpush
-```
+```bash
 docker push `user_id/image_name:ver`
 ```
 
 ## containerを削除
-```
+```bash
 docker rm `container_name` # or `container_id`
 ```
 
 
 
 ## imageを削除
-```
+```bash
 docker rmi `image_name`
 
 docker rmi continuumio/anaconda3
@@ -230,18 +231,18 @@ docker images
 ```
 
 
-[Contentsに戻る](#Contents)
+[Contentsに戻る][# Contents]
 
 
 
 # dockerfileからimageをbuild
-```
+```bash
 cd `working directory`
 docker build -t `image_name` .
 
-docker build -t `image_name` . --no-cache # オプションないと前回の続きをbuildする
+docker build -t `image_name` . --no-cache     # オプションないと前回の続きをbuildする
 ```
-[Contentsに戻る](#Contents)
+[Contentsに戻る][# Contents]
 
 
 # Reference
@@ -254,4 +255,7 @@ https://punhundon-lifeshift.com/dockerfile
 ### miniconda + conda-forgeで開発環境を揃える
 https://qiita.com/kimisyo/items/66db9c9db94751b8572b    
 
-[Contentsに戻る](#Contents)
+[Contentsに戻る][# Contents]
+
+
+[# Contents]: #Contents
