@@ -1,30 +1,34 @@
-```bash
-```
-
-
-移動前のdirectoryに戻る
+# 移動前のdirectoryに戻る
 ```bash
 cd -
 ```
 
 
-値を出力する (like print)
+# 値を出力する (like print)
 ```
-echo
+echo xxx
+# xxx
+```
+変数(var)を出力する
+
+```bash
+# var=output
+echo $var
+# output
 ```
 
-ファイルを結合して表示する
+# ファイルを結合して表示する
 ```bash
 cat `filename1` `filename2` ...
 ```
 
-ファイルを連結して新しいファイルを作る、上書きする、追加する
+# ファイルを連結して新しいファイルを作る、上書きする、追加する
 ```bash
 cat `filename1` `filename2` > `new_file`  # 上書き
 cat `filename1` `filename2` >> `target_file`  # 追加
 ```
 
-入力した内容で上書きする、追加する
+# 入力した内容で上書きする、追加する
 ```bash
 cat > `filename` # 上書き
 cat >> `filename` # 追加
@@ -33,58 +37,58 @@ cat >> `filename` # 追加
 
 
 
-先頭に移動
+# 先頭に移動
 ```
 ctrl + a
 ```
-末尾に移動
+# 末尾に移動
 ```
-ctrl + e
+# ctrl + e
 ```
 
-前方の単語をカット
+# 前方の単語をカット
 ```
 ctrl + w
 ```
 
-行頭までカット
+# 行頭までカット
 ```
 ctrl + u
 ```
 
-行末までカット
+# 行末までカット
 ```
 ctrl + k
 ```
 
-ペースト
+# ペースト
 ```
 ctrl + y
 ```
 
-コマンド履歴の表示
+# コマンド履歴の表示
 ```bash
 history
 ```
 
-履歴からコマンドを使用
+# 履歴からコマンドを使用
 ```bash
 !x(数字)
 ```
 
-manualを表示
+# manualを表示
 ```bash
 man `command`
 # qで終了
 ```
 
-中身の入ったdirectoryの削除
+# 中身の入ったdirectoryの削除
 ```bash
 rm -r `directory name`
 # -r `recursive` 再帰的な
 ```
 
-lessで中身を表示する
+# lessで中身を表示する
 ```bash
 less `filename`
 # spaceで1pageスクロール
@@ -93,7 +97,7 @@ less `filename`
 # /`word`で検索 nで移動
 ```
 
-ファイルをコピー、移動
+# ファイルをコピー、移動
 ```bash
 cp `target_file1` `new_file`
 cp `target_file1` `target_file2` ... `directory_name`
@@ -101,7 +105,7 @@ cp -r `target_directory` `new directory`
 mv `target_directory` `destination` # mvは-rがいらない
 ```
 
-brace展開 {x..y}
+# brace展開 {x..y}
 ```bash
 echo file{1..5}
 # file1 file2 file3 file4 file5
@@ -109,7 +113,7 @@ echo file{11,13}
 # file11 file13
 ```
 
-ワイルドカード
+# ワイルドカード
 ```bash
 # file1 file2 file10
 file* # file1 file2 file10 文字列
@@ -117,7 +121,7 @@ file? # file1 file2 一文字
 file?? # file10 二文字
 ```
 
-ハードリンクとシンボリックリンク
+# ハードリンクとシンボリックリンク
 - ハードリンク : ファイルの実体に名前を結びつける (not directory)
 ```bash
 ls -F
@@ -199,7 +203,7 @@ cat testlink
 # test file was recreated  #ファイル名が同じなのでアクティブ
 ```
 
-探す  
+# 探す  
 ```bash
 find `directory` `search condition` `action`
 
@@ -209,7 +213,7 @@ find . -type d # d:directory, l:synbolic link,
 find . -type d -name `target_directory` # 条件を追加して検索
 ```
 
-高速に探す (ファイルのDBから探す、作成されていないと検索できない)
+# 高速に探す (ファイルのDBから探す、作成されていないと検索できない)
 ```bash
 locate --version
 # ex.  mlocate 0.26 if installed
@@ -225,13 +229,13 @@ sudo updatedb
 
 ```
 
-ファイルの中の特定の行を検索する
+# ファイルの中の特定の行を検索する
 ```bash
 grep "keyword" "file"
 # global regular expression print: ファイル全体のうち、正規表現に一致する行を出力する
 ```
 
-permissionの変更 (change mode)
+# permissionの変更 (change mode)
 ```bash
 ls -l
 
@@ -261,26 +265,26 @@ x=1
 足し算でそれぞれのユーザーのパーミッションを1~7で指定
 ```
 
-スーパーユーザーに変更する
+# スーパーユーザーに変更する
 ```bash
 su
 # pw
 # root@localhost directory # 
 ```
 
-一般ユーザーに戻る
+# 一般ユーザーに戻る
 ```bash
 exit
 # user@localhost directory $
 ```
 
-スーパーユーザーとして実行する
+# スーパーユーザーとして実行する
 ```bash
 sudo command
 # user pw
 ```
 
-文字数や行数を数える
+# 文字数や行数を数える
 ```bash
 wc -w `file`
 # 単語数
@@ -294,7 +298,7 @@ wc -l `file`
 
 
 
- 並び替えて表示する
+# 並び替えて表示する
  ```bash
  sort `file`
  sort -r `file` # 逆順
@@ -303,7 +307,7 @@ wc -l `file`
  ls . | sort # パイプラインと組み合わせてdirectoryのリストをソート
  ```
 
- 重複を取り除く
+ # 重複を取り除く
  ```bash
  unique `file` # 連続した重複を除く
 
@@ -315,12 +319,12 @@ sort `file` | unique -c | sort -nr | tail -n 3 # 重複回数順の末尾3行を
 
 ```
 
-ファイルの変更を監視する
+# ファイルの変更を監視する
 ```bash
 tail -f `file` # ctrl + cで監視モードを終了
 ```
 
-プロセスを表示する
+# プロセスを表示する
 ```bash
 ps
 ps x # デーモンや別ターミナルを含めた全てのプロセス表示
@@ -329,12 +333,12 @@ ps u # 詳細情報も含めてプロセス表示
 ps ua
 ```
 
-x秒スリープする
+# x秒スリープする
 ```bash
 sleep `x`
 ```
 
-ジョブを一覧する
+# ジョブを一覧する
 ```bash
 ctrl + z # ジョブを一時停止する
 
@@ -344,7 +348,7 @@ jobs # [1]  + suspended  sleep 10
 jobs -l # [1]  + 93519 suspended  sleep 10
 ```
 
-フォアグラウンド実行に変更する
+# フォアグラウンド実行に変更する
 ```bash
 sleep 10
 ctrl + z
@@ -353,7 +357,7 @@ fg %1 # 1を指定すると1のjobが再開
 jobs # (clear)
 ```
 
-バックグラウンド実行に変更する (実行中に別処理を行える)
+# バックグラウンド実行に変更する (実行中に別処理を行える)
 ```bash
 sleep 60
 ctrl + z
@@ -363,18 +367,18 @@ jobs # [1]  + running    sleep 60 >> [1]  + done       sleep 60
 ```
 
 
-最初からバックグラウンド実行したい場合は末尾に＆をつける
+# 最初からバックグラウンド実行したい場合は末尾に＆をつける
 ```bash
 sleep 10000 & 
 ```
 
-バックグラウンド処理を停止するにはkill
+# バックグラウンド処理を停止するにはkill
 ```bash
 jobs # [1]  + running    sleep 10000
 kill %1 # [1]  + terminated  sleep 10000  
 ```
 
-killコマンドの本質は停止ではなくシグナル送信  
+# killコマンドの本質は停止ではなくシグナル送信  
 kill -TERM が停止としてデフォルトで設定されているだけ
 ```bash
 kill -l
@@ -383,7 +387,7 @@ kill -l
 kill -l | wc -w # 31
 ```
 
-プロセスを強制終了
+# プロセスを強制終了
 ```bash
 sleep 10000 & # [1] 95540
 jobs # [1]  + running    sleep 10000
@@ -392,7 +396,7 @@ kill -KILL %1 # [1]  + killed     sleep 10000
 kill -9 %1 # [1]  + killed     sleep 10000 
 ```
 
-HTTPやFTPでのダウンロードやアップロードする (client for URL)
+# HTTPやFTPでのダウンロードやアップロードする (client for URL)
 ```bash
 curl `http://www.xxx/`
 curl -O `http://www.xxx/` # ファイルへの保存
@@ -418,8 +422,66 @@ curl http://www.google.com/ > google.html # 結果は上記と一緒
 curl http://files.rcsb.org/download/3ERK.pdb | grep ATOM > test.pdb # パイプラインもできる
 ```
 
-プロセスを表示する
+# プロセスを表示する
 ```bash
 top # ctrl + cで終了
 ```
 
+# 環境変数を一覧する
+```bash
+env
+```
+
+# PATHを通す
+https://qiita.com/fuwamaki/items/3d8af42cf7abee760a81
+```bash
+export PATH=$PATH:`target_directory`
+```
+
+# コマンドの確認
+```bash
+which `command`
+# /usr/bin
+```
+
+# apt (Advanced Package Tool)
+インストールされているパッケージを表示
+```bash
+apt list --installed
+```
+アップデートできるパッケージを表示
+```bash
+apt list --upgradable
+```
+パッケージを検索する
+```bash
+apt search zsh
+```
+パッケージをインストール
+```bash
+sudo apt install xxx
+```
+パッケージを削除
+```bash
+sudo apt remove xxx
+```
+不要なパッケージを削除
+
+```bash
+sudo apt-get autoremove
+```
+パッケージのインデックスをアップデート
+
+```bash
+sudo apt update
+```
+パッケージをアップデート
+```bash
+sudo apt update
+sudo apt upgrade
+```
+# 端末を閉じてログアウトしても処理を続ける
+
+```bash
+nohup `command` &
+```
