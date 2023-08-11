@@ -241,6 +241,9 @@ cd `working directory`
 docker build -t `image_name` .
 
 docker build -t `image_name` . --no-cache     # オプションないと前回の続きをbuildする
+
+docker build -t 'image_name' -f 'dir/dockerfile_name' 'dir/'   # dir/にある任意のdockerfileからbuildする
+
 ```
 [Contentsに戻る][# Contents]
 
