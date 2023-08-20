@@ -62,6 +62,8 @@ RUN pip install lightdock
 # RUN conda install rdkit -y
 # RUN conda install -c conda-forge pymol-open-source -y
 # RUN conda install -c conda-forge nodejs jupyterlab
+RUN conda install openmm
+RUN conda install openmm-setup
 
 
 RUN conda init
