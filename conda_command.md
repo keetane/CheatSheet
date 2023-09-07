@@ -5,16 +5,19 @@
   > conda create -n pymol -c conda-forge python=3.10 pymol-open-source
 
 - openmm (with PyMOL)
-  > conda create -n openmm -c conda-forge python=3.10 openmm openmm-setup pymol-open-source
+  > conda create -n openmm -c conda-forge -y python=3.10 openmm openmm-setup pymol-open-source mdanalysis nglview
 
 - openmm (with cudatoolkit, without PyMOL)
   > conda create -n openmm python=3.10 openmm openmm-setup cudatoolkit=11.2
+  
+- openff, openmm
+  > conda create -n md -c conda-forge -y python=3.10 openff-toolkit openmm openmm-setup openmmforcefields pymol-open-source mdanalysis nglview
 
 - chemoinfomatics [ref](https://datachemeng.com/post-4358/)
-  > conda create -n ci -c conda-forge -y python=3.10  numpy pandas scipy matplotlib seaborn scikit-learn boruta_py lightgbm xgboost deap rdkit jupyterlab spyder
-
+  > conda create -n ci -c conda-forge -y python=3.10  numpy pandas scipy matplotlib seaborn scikit-learn boruta_py lightgbm xgboost deap rdkit jupyterlab spydery
+  
 - bioinfomatics
-    > conda create -n bi -c conda-forge -y python=3.10 pandas pymol-open-source BioPython 
+    > conda create -n bi -c conda-forge -y python=3.10 pymol-open-source=2.5 BioPython=1.81 pandas=2.0.3 requests=2.31 pypdb=2.3 biopandas=0.4.1 rdkit=2022.09.1 pubchempy=1.0.4 ipykernel=6.25.1
 
 
 
@@ -64,10 +67,10 @@
 - 仮想環境をコピーして作成  
 例：baseをコピーしてpy38を作る
 
-> conda create -n py38 --clone base
+> conda create -n new_env --clone original_env
 
 - 環境再現のためのリストから環境を再構築
-> conda create -n py38 --file package-list.txt
+> conda create -n new_env --file package-list.txt
 
 ## conda環境
 - 有効化
