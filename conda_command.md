@@ -19,6 +19,8 @@
 - bioinfomatics
     > conda create -n bi -c conda-forge -y python=3.10 pymol-open-source=2.5 BioPython=1.81 pandas=2.0.3 requests=2.31 pypdb=2.3 biopandas=0.4.1 rdkit=2022.09.1 pubchempy=1.0.4 ipykernel=6.25.1
 
+- streamlit
+  > conda create -n st -c conda-forge -y python=3.10 streamlit matplotlib seaborn rdkit requests # playsound
 
 
 ## conda環境の一覧
