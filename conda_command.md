@@ -14,7 +14,7 @@
   > conda create -n md -c conda-forge -y python=3.10 openff-toolkit openmm openmm-setup openmmforcefields pymol-open-source mdanalysis nglview
 
 - chemoinfomatics [ref](https://datachemeng.com/post-4358/)
-  > conda create -n ci -c conda-forge -y python=3.10  numpy pandas scipy matplotlib seaborn scikit-learn boruta_py lightgbm xgboost deap rdkit jupyterlab spyder streamlit requests pubchempy py3dmol
+  > conda create -n ci -c conda-forge -y python=3.10  numpy pandas scipy matplotlib seaborn scikit-learn boruta_py lightgbm xgboost deap rdkit jupyterlab spyder streamlit requests pubchempy py3dmol plotly
   
 - bioinfomatics
     > conda create -n bi -c conda-forge -y python=3.10 pymol-open-source=2.5 BioPython=1.81 pandas=2.0.3 requests=2.31 pypdb=2.3 biopandas=0.4.1 rdkit=2022.09.1 pubchempy=1.0.4 ipykernel=6.25.1
