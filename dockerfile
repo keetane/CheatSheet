@@ -1,6 +1,6 @@
 # M1 MacでUbuntuコンテナを作る時の注意
 # https://qiita.com/silloi/items/739699337b9bf4883b3e
-FROM --platform=linux/amd64 ubuntu:20.04
+FROM --platform=linux/amd64 ubuntu:22.04
 
 # update
 RUN apt-get -y update && apt-get install -y \
@@ -13,29 +13,9 @@ wget \
 curl \
 unzip \
 vim 
-RUN apt update -y
-RUN apt upgrade -y
-RUN apt install -y build-essential 
-
-
-# p2rank installation
-RUN apt install -y default-jre
-RUN mkdir -p /usr/local/apps
-WORKDIR /usr/local/apps
-RUN curl -L -O https://github.com/rdk/p2rank/releases/download/2.4/p2rank_2.4.tar.gz
-RUN tar -xvf ./p2rank_2.4.tar.gz
-
-# 不要なファイルの削除
-RUN rm -f ./p2rank_2.4.tar.gz
-
-# P2Rankのlogファイルの出力先を変更
-RUN sed -i -e 's|$INSTALL_DIR|$HOME/.p2rank|g' ./p2rank_2.4/prank
-
-# set a path
-ENV PATH $PATH:/usr/local/apps/p2rank_2.4
-# export PATH=$PATH:/usr/local/apps/p2rank_2.4
-
-
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y build-essential default-jre
 
 #install miniconda3
 WORKDIR /opt
@@ -49,31 +29,20 @@ ENV PATH /opt/miniconda3/bin:$PATH
 RUN conda config --add channels conda-forge
 RUN conda config --remove channels defaults
 
-# conda create
-RUN conda create -n sbdd python=3.7
-
-# install conda package
-SHELL ["conda", "run", "-n", "sbdd", "/bin/bash", "-c"]
-# https://qiita.com/kimisyo/items/66db9c9db94751b8572b
-
-RUN conda config --add channels conda-forge
-RUN conda install pip
-RUN pip install lightdock
-# RUN conda install rdkit -y
-# RUN conda install -c conda-forge pymol-open-source -y
-# RUN conda install -c conda-forge nodejs jupyterlab
-RUN conda install openmm
-RUN conda install openmm-setup
+# create environment
+RUN conda create -n chem -y python=3.9 rdkit pubchempy scikit-learn 
 
 
-RUN conda init
-WORKDIR /work
+# OpenBabel3
+WORKDIR ~
+RUN git clone https://github.com/openbabel/openbabel.git
+WORKDIR openbabel
+RUN mkdir build
+WORKDIR build
+RUN cmake -DWITH_MAEPARSER=OFF -DWITH_COORDGEN=OFF -DPYTHON_BINDINGS=ON -DRUN_SWIG=ON ..
+RUN make
+RUN make install
 
-# CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--LabApp.token=''"]
-# CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--ServerApp.token=''"]
-
-# かめさんのdocker image_name
-# datascientistus/ds-python-env
 
 # sbddというdocker imageをbuild
 # docker build -t sbdd . 
