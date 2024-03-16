@@ -15,7 +15,7 @@ unzip \
 vim 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install -y build-essential default-jre
+RUN apt-get install -y build-essential default-jre git
 
 #install miniconda3
 WORKDIR /opt
@@ -43,6 +43,7 @@ RUN cmake -DWITH_MAEPARSER=OFF -DWITH_COORDGEN=OFF -DPYTHON_BINDINGS=ON -DRUN_SW
 RUN make
 RUN make install
 
+WORKDIR /work
 
 # sbddというdocker imageをbuild
 # docker build -t sbdd . 
