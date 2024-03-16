@@ -17,6 +17,13 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install -y build-essential default-jre git
 
+# prompt setting
+# https://zenn.dev/melos/articles/043fc03789603c
+RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+COPY ./bash_config /root
+RUN cat /root/.alias >> /root/.bashrc
+
 #install miniconda3
 WORKDIR /opt
 # download miniconda package and install miniconda
