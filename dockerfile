@@ -19,10 +19,12 @@ RUN apt-get install -y build-essential default-jre git
 
 # prompt setting
 # https://zenn.dev/melos/articles/043fc03789603c
+WORKDIR /root
 RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 COPY ./bash_config /root
-RUN cat /root/.alias >> /root/.bashrc
+
+RUN cat /root/bash_config >> /root/.bashrc
 
 #install miniconda3
 WORKDIR /opt
@@ -47,13 +49,13 @@ RUN apt install openbabel libopenbabel-dev -y
 WORKDIR /work
 
 # sbddというdocker imageをbuild
-# docker build -t sbdd . 
+# docker build -t chem . 
 
 # 最初からbuildするなら--no-cache
-# docker build -t sbdd . --no-cache
+# docker build -t chem . --no-cache
 
 # ubuntuというcontainerをsbddというimageからcreateしてbashでrun
-# docker run -it -v ~/Documents/Linux:/work --name sbdd sbdd bash
+# docker run -it -v ~/Documents/Linux:/work --name chem chem bash
 
 # dockerfileのキャッシュを確認
 # docker system df
