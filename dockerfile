@@ -15,7 +15,14 @@ unzip \
 vim 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install -y build-essential default-jre
+RUN apt-get install -y build-essential default-jre git
+
+# prompt setting
+# https://zenn.dev/melos/articles/043fc03789603c
+RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+COPY ./bash_config
+RUN cat /root/.alias >> /root/.bashrc
 
 #install miniconda3
 WORKDIR /opt
@@ -34,15 +41,10 @@ RUN conda create -n chem -y python=3.9 rdkit pubchempy scikit-learn
 
 
 # OpenBabel3
-WORKDIR ~
-RUN git clone https://github.com/openbabel/openbabel.git
-WORKDIR openbabel
-RUN mkdir build
-WORKDIR build
-RUN cmake -DWITH_MAEPARSER=OFF -DWITH_COORDGEN=OFF -DPYTHON_BINDINGS=ON -DRUN_SWIG=ON ..
-RUN make
-RUN make install
+RUN apt-get update
+RUN apt install openbabel libopenbabel-dev -y
 
+WORKDIR /work
 
 # sbddというdocker imageをbuild
 # docker build -t sbdd . 
