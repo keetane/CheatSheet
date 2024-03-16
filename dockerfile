@@ -34,14 +34,8 @@ RUN conda create -n chem -y python=3.9 rdkit pubchempy scikit-learn
 
 
 # OpenBabel3
-WORKDIR ~
-RUN git clone https://github.com/openbabel/openbabel.git
-WORKDIR openbabel
-RUN mkdir build
-WORKDIR build
-RUN cmake -DWITH_MAEPARSER=OFF -DWITH_COORDGEN=OFF -DPYTHON_BINDINGS=ON -DRUN_SWIG=ON ..
-RUN make
-RUN make install
+RUN apt-get update
+RUN apt install openbabel libopenbabel-dev -y
 
 WORKDIR /work
 
