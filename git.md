@@ -125,12 +125,14 @@ git diff main (sub)
 
 
 ```sh
-git clone
+git init --bare --shared ./repository_name    # https://qiita.com/masatomix/items/19f4604c939567929ee8
+git clone repository_name
 git pull
 git branch 
 git checkout -b sub
 git status
 git add . (or target file)
+git diff
 git diff --staged
 git diff main 
 git diff --stat
