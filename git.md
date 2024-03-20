@@ -122,3 +122,22 @@ git commit -m 'git.md was updated'
 ```sh
 git diff main (sub)
 ```
+
+
+```sh
+git clone
+git pull
+git branch 
+git checkout -b sub
+git status
+git add . (or target file)
+git diff --staged
+git diff main 
+git diff --stat
+git diff --name-only
+git reset .
+git commit -m 'comment'
+git checkout main
+git merge
+git branch -d
+git push
